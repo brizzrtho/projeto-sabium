@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="configuracao.css">
+</head>
+<body>
+
+  <nav id="sidebar">
+    <div id="sidebar_content">
+      <button id="open_btn">
+        <i id="open_btn_icon" class="fa-solid fa-bars"></i>
+      </button>
+      <div id="logo">
+        <img src="logosozinha.png" alt="logo" />
+      </div>
+      <ul id="side_items">
+        <li class="side-item">
+            <a href="#">
+                <i class="fa-solid fa-comment"></i>
+                <span class="item-description">Mensagens</span>
+            </a>
+        </li>
+        <li class="side-item">
+            <a href="#">
+                <i class="fa-solid fa-users"></i>
+                <span class="item-description">Comunidade</span>
+            </a>
+        </li>
+        <li class="side-item">
+            <a href="#">
+                <i class="fa-solid fa-book"></i>
+                <span class="item-description">Cursos</span>
+            </a>
+        </li>
+        <li class="side-item">
+            <a href="#">
+                <i class="fa-solid fa-bell"></i>
+                <span class="item-description">Notificações</span>
+            </a>
+        </li>
+        <li class="side-item">
+            <a href="#">
+                <i class="fa-solid fa-user"></i>
+                <span class="item-description">Perfil</span>
+            </a>
+        </li>
+        <li class="side-item active">
+            <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span class="item-description">Configurações</span>
+            </a>
+        </li>
+      </ul>
+    </div>
+    <div id="logout">
+      <button id="logout_btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="item-description">Sair</span>
+      </button>
+    </div>
+    <div id="user">
+      <img src="avatar.png" alt="Avatar" id="user_avatar" /> <div id="user_infos" class="item-description">
+        <span>Nome do Usuário</span>
+        <span>email@exemplo.com</span>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="main-content">
+        <div class="config-header">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Procurar configuração">
+            </div>
+            <h1>Configurações</h1>
+        </div>
+
+        <div class="config-sections">
+            <div class="config-section-item" id="open-edit-profile-modal">
+                <h3>Editar Perfil</h3>
+                <p>Altere seu nome, email, senha e foto de perfil.</p>
+            </div>
+            <div class="config-section-item">
+                <h3>Assinatura</h3>
+                <p>Gerencie seus planos de assinatura e pagamentos.</p>
+            </div>
+            <div class="config-section-item">
+                <h3>Segurança e Privacidade</h3>
+                <p>Configure opções de privacidade e segurança da sua conta.</p>
+            </div>
+        </div>
+    </div>
+  </main>
+
+  <div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close-btn">&times;</span>
+        <h2>Dados da Conta</h2>
+
+        <div class="profile-picture-section">
+            <label for="profile-picture-upload-modal">
+                <img src="avatar.png" alt="Profile Picture" class="profile-picture-preview" id="profile-picture-preview-modal">
+            </label>
+            <input type="file" id="profile-picture-upload-modal" accept="image/*">
+        </div>
+
+        <label for="nome-modal">Nome Completo</label>
+        <input type="text" id="nome-modal" placeholder="Seu nome completo">
+
+        <label for="email-modal">E-mail</label>
+        <input type="email" id="email-modal" placeholder="exemplo@email.com">
+
+        <h2>Segurança</h2>
+
+        <label for="senha-modal">Nova Senha</label>
+        <input type="password" id="senha-modal" placeholder="********">
+
+        <button type="submit">Salvar Todas as Alterações</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Lógica da Sidebar
+        const openBtn = document.getElementById('open_btn');
+        const sidebar = document.getElementById('sidebar');
+        const openBtnIcon = document.getElementById('open_btn_icon');
+
+        openBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open-sidebar');
+            if (sidebar.classList.contains('open-sidebar')) {
+                openBtnIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                openBtnIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // Lógica do Modal de Edição de Perfil
+        const editProfileModal = document.getElementById('editProfileModal');
+        const openEditProfileModalBtn = document.getElementById('open-edit-profile-modal');
+        const modalCloseBtn = editProfileModal.querySelector('.modal-close-btn');
+
+        openEditProfileModalBtn.addEventListener('click', () => {
+            editProfileModal.classList.add('active');
+        });
+
+        modalCloseBtn.addEventListener('click', () => {
+            editProfileModal.classList.remove('active');
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (event) => {
+            if (event.target == editProfileModal) {
+                editProfileModal.classList.remove('active');
+            }
+        });
+
+        // Lógica de pré-visualização da imagem no modal e atualização do avatar da sidebar
+        const profilePictureUploadModal = document.getElementById('profile-picture-upload-modal');
+        const profilePicturePreviewModal = document.getElementById('profile-picture-preview-modal');
+        const userAvatarSidebar = document.getElementById('user_avatar'); // OBTENDO O AVATAR DA SIDEBAR
+
+        if (profilePictureUploadModal && profilePicturePreviewModal && userAvatarSidebar) { // Inclua o novo elemento na verificação
+            profilePictureUploadModal.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profilePicturePreviewModal.src = e.target.result; // Atualiza a pré-visualização no modal
+                        userAvatarSidebar.src = e.target.result;           // ATUALIZA O AVATAR NA SIDEBAR
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+  </script>
+</body>
+</html>
