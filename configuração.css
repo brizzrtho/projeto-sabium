@@ -1,0 +1,512 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    background: #fffcf6;
+    color: #4c3000;
+    min-height: 100vh;
+    display: flex; /* Colocando sidebar e conteúdo principal lado a lado */
+}
+
+/* Sidebar no estado padrão (fechada) */
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fffcf6;
+    height: 100vh;
+    border-right: solid #a97449 2px;
+    position: fixed; /* Fixando a sidebar para que ela não se mova com a rolagem da página */
+    left: 0;
+    top: 0;
+    transition: all .5s ease;
+    width: 82px; /* Largura da sidebar quando está fechada */
+    z-index: 2; /* Garantindo que a sidebar fique acima do conteúdo principal */
+    overflow: hidden; /* Escondendo qualquer conteúdo que exceda a largura da sidebar (textos, etc.) */
+}
+
+#sidebar_content {
+    padding: 14px; /* Espaçamento interno para o conteúdo da sidebar */
+}
+
+#logo img {
+    width: 60px;
+    display: block;
+    margin-bottom: 20px; /* Adicionando um espaço abaixo do logo para separar dos ícones */
+}
+
+/* Botão para abrir/fechar a sidebar */
+#open_btn {
+    padding: 5px 0 0 5px;
+    position: absolute; /* Posicionando o botão de forma absoluta em relação à sidebar */
+    top: 30px;
+    right: -11px; /* Posicionando-o ligeiramente para fora da borda da sidebar */
+    background-color: white;
+    color: #a97449;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 3; /* Garantindo que o botão esteja acima da sidebar */
+}
+
+/* Lista de itens da sidebar (os ícones) */
+#side_items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaço entre os itens da lista */
+    list-style: none; /* Removendo marcadores de lista */
+    margin-top: 30px; /* Empurrando os ícones para baixo para não ficarem grudados no logo */
+}
+
+.side-item {
+    border-radius: 25px;
+    padding: 14px;
+    cursor: pointer;
+}
+
+.side-item.active {
+    background-color: #4c3000; /* Fundo para o item ativo */
+}
+
+.side-item:hover:not(.active),
+#logout_btn:hover {
+    background-color: #e4d0b3; /* Cor de fundo ao passar o mouse, exceto no item ativo */
+}
+
+.side-item a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centralizando o ícone quando a sidebar está fechada */
+    color: #4c3000;
+    font-weight: 700;
+}
+
+.side-item.active a {
+    color: #e3e9f7; /* Cor do ícone do item ativo */
+}
+
+.side-item a i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+/* DESCRIÇÃO DOS ITENS (TEXTO) - ESCONDIDO POR PADRÃO */
+.item-description {
+    width: 0; /* Largura zero para esconder o texto */
+    overflow: hidden; /* Escondendo o texto que transborda */
+    white-space: nowrap; /* Não quebrar a linha do texto */
+    text-overflow: ellipsis; /* Adicionar "..." se o texto for muito longo */
+    font-size: 14px;
+    height: 0; /* Altura zero para esconder o texto */
+    opacity: 0; /* Invisível */
+    visibility: hidden; /* Invisível para leitores de tela também */
+    transition: opacity .3s ease, width .3s ease, height .3s ease, visibility .3s ease; /* Animação suave */
+}
+
+/* Seção de Logout */
+#logout {
+    font-weight: 700;
+    color: #4c3000;
+    border-top: 1px solid #e3e9f7; /* Linha de separação acima do botão de logout */
+    padding: 14px;
+}
+
+#logout_btn {
+    color: #4c3000;
+    font-weight: 700;
+    border: none;
+    padding: 18px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center; /* Centralizando o ícone quando a sidebar está fechada */
+    gap: 0;
+    align-items: center;
+    border-radius: 25px;
+    text-align: start;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* SEÇÃO DE PERFIL DO USUÁRIO (#user) - ESTADO FECHADO */
+#user {
+    margin: 10px 10px 30px 10px; /* Margens para posicionar o avatar */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background-color: #4c3000;
+    border-radius: 25px;
+    justify-content: center; /* Centralizando o avatar quando a sidebar está fechada */
+    height: 70px;
+    overflow: hidden; /* Escondendo as informações do usuário quando a sidebar está fechada */
+}
+
+#user_avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100px; /* Deixando o avatar circular */
+}
+
+/* INFORMAÇÕES DO USUÁRIO (#user_infos) - ESCONDIDO POR PADRÃO */
+#user_infos {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-weight: 700;
+    opacity: 0; /* Invisível */
+    width: 0; /* Largura zero */
+    visibility: hidden; /* Invisível para leitores de tela também */
+    transition: opacity 0.3s ease, width 0.3s ease, visibility 0.3s ease; /* Animação suave */
+}
+
+#user_infos span:last-child {
+    color: #afafaf;
+    font-size: 12px;
+}
+
+/* ESTADO ABERTO (QUANDO A CLASSE 'open-sidebar' É ADICIONADA VIA JS) */
+#sidebar.open-sidebar {
+    width: 250px; /* Largura da sidebar quando está aberta */
+}
+
+/* Quando a sidebar está aberta, mostra as descrições dos itens */
+#sidebar.open-sidebar .item-description {
+    width: auto; /* Aumenta a largura para mostrar o texto */
+    height: auto; /* Aumenta a altura para mostrar o texto */
+    opacity: 1; /* Torna o texto visível */
+    visibility: visible; /* Torna o texto visível para leitores de tela */
+    margin-left: 10px; /* Espaçamento entre o ícone e o texto */
+}
+
+/* Alinha os itens à esquerda quando a sidebar estiver aberta */
+#sidebar.open-sidebar .side-item a {
+    justify-content: flex-start; /* Alinhando o conteúdo do item ao início */
+    gap: 14px; /* Espaço entre o ícone e o texto */
+}
+
+/* Alinha o logout à esquerda e mostra o texto */
+#sidebar.open-sidebar #logout_btn {
+    justify-content: flex-start; /* Alinhando o botão de logout ao início */
+    gap: 20px;
+}
+
+/* Alinha o perfil à esquerda e mostra as infos do usuário */
+#sidebar.open-sidebar #user {
+    justify-content: flex-start; /* Alinhando o conteúdo do perfil ao início */
+    gap: 8px;
+}
+
+#sidebar.open-sidebar #user_infos {
+    opacity: 1; /* Torna as informações do usuário visíveis */
+    width: auto; /* Aumenta a largura para mostrar as informações */
+    visibility: visible; /* Torna as informações visíveis para leitores de tela */
+}
+
+/* Ajustes para o conteúdo principal */
+main {
+    margin-left: 82px; /* Margem inicial para dar espaço à sidebar quando ela está fechada */
+    padding: 20px; /* Adicionando um padding interno ao conteúdo principal */
+    flex-grow: 1; /* Faz com que o 'main' ocupe todo o espaço restante horizontalmente */
+    transition: margin-left .5s ease; /* Transição suave na margem esquerda */
+    display: flex; /* Usando flexbox para centralizar o '.main-content' */
+    justify-content: center; /* Centralizando o conteúdo horizontalmente */
+}
+
+/* Quando a sidebar está aberta, ajusta a margem esquerda do conteúdo principal */
+#sidebar.open-sidebar ~ main {
+    margin-left: 250px;
+}
+
+/* ----------------------------------------------------- */
+/* ESTILOS PARA A PÁGINA DE CONFIGURAÇÕES EM SI */
+/* ----------------------------------------------------- */
+.main-content {
+    width: 100%;
+    max-width: 800px; /* Largura máxima para o container das configurações */
+    padding: 30px; /* Espaçamento interno generoso */
+    background-color: #f3e4d7;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.config-header {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.config-header h1 {
+    font-size: 32px;
+    color: #4c3000;
+    margin-top: 20px;
+    border-bottom: 2px solid #a97449; /* Linha divisória abaixo do título principal */
+    padding-bottom: 10px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #ecdbc4;
+    border-radius: 25px;
+    padding: 8px 15px;
+    width: fit-content; /* Largura se ajusta ao conteúdo (input + ícone) */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-bar i {
+    color: #a97449;
+    margin-right: 10px;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #4c3000;
+    outline: none; /* Removendo o contorno ao focar */
+    width: 200px;
+}
+
+.search-bar input::placeholder {
+    color: #a97449;
+}
+
+.config-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os blocos de configuração */
+}
+
+.config-section-item {
+    background-color: #ecdbc4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border-bottom: 1px solid #c6b299; /* Linha horizontal entre os itens */
+}
+.config-section-item:last-child {
+    border-bottom: none; /* Removendo a linha do último item para não ter uma linha extra no final */
+}
+
+
+.config-section-item:hover {
+    background-color: #e4d0b3;
+    transform: translateY(-2px); /* Efeito de "levantar" ao passar o mouse */
+}
+
+.config-section-item h3 {
+    font-size: 22px;
+    color: #4c3000;
+    margin-bottom: 5px;
+    padding-bottom: 8px;
+}
+
+.config-section-item p {
+    font-size: 16px;
+    color: #5a4a3c;
+    margin: 0;
+}
+
+
+/* --- Estilos do Modal (Pop-up de Edição de Perfil) --- */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica fixo na tela, não rola com o conteúdo */
+    z-index: 1000; /* Garante que ele apareça por cima de todos os outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ocupa 100% da largura da viewport */
+    height: 100%; /* Ocupa 100% da altura da viewport */
+    overflow: auto; /* Adiciona rolagem se o conteúdo for maior que a tela */
+    background-color: rgba(0,0,0,0.6); /* Fundo escuro semi-transparente */
+    justify-content: center; /* Centraliza o conteúdo do modal horizontalmente */
+    align-items: center; /* Centraliza o conteúdo do modal verticalmente */
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex; /* Mostra o modal quando a classe 'active' é adicionada */
+}
+
+.modal-content {
+    background-color: #f3e4d7;
+    margin: auto; /* Centraliza o bloco do modal no modal */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative; /* Para posicionar o botão de fechar */
+    width: 90%;
+    max-width: 600px; /* Largura máxima do pop-up */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os elementos do formulário */
+    text-align: center; /* Centraliza o texto dentro do pop-up */
+    color: #4c3000;
+}
+
+.modal-close-btn {
+    color: #aaaaaa;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute; /* Posicionamento absoluto em relação ao '.modal-content' */
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: #4c3000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #c6b299;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+    width: calc(100% - 24px); /* 100% menos o padding lateral para o input */
+    max-width: 400px;
+    padding: 12px;
+    margin: 8px auto 0 auto; /* Centralizando o input */
+    border: 1px solid #c6b299;
+    border-radius: 8px;
+    background: #fff9f0;
+    font-size: 16px;
+    color: #4c3000;
+}
+
+.modal-content button {
+    margin-top: 25px;
+    background-color: #4c3000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+    font-size: 16px;
+    max-width: 300px;
+    margin-left: auto; /* Centralizando o botão */
+    margin-right: auto; /* Centralizando o botão */
+    display: block;
+}
+
+.modal-content button:hover {
+    background-color: #2c1e00;
+}
+
+.profile-picture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Fazendo a imagem ser circular */
+    object-fit: cover; /* Garantindo que a imagem preencha o círculo */
+    border: 4px solid #a97449; /* Borda para destaque */
+    margin-bottom: 10px;
+    cursor: pointer; /* Indicando que é clicável */
+    transition: border-color 0.2s ease;
+}
+
+.profile-picture-preview:hover {
+    border-color: #4c3000;
+}
+
+.profile-picture-section input[type="file"] {
+    display: none; /* Escondendo o input de arquivo padrão, pois usamos a imagem para clicar */
+}
+
+/* Media Queries para responsividade geral e do modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    .modal-content h2 {
+        font-size: 24px;
+    }
+    .modal-content input {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .modal-content button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 480px) {
+    .main-content {
+        padding: 15px;
+    }
+    .config-header h1 {
+        font-size: 28px;
+    }
+    .search-bar input {
+        width: 150px;
+    }
+    .config-section-item h3 {
+        font-size: 20px;
+    }
+    .config-section-item p {
+        font-size: 14px;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+    /* Ajustes para a sidebar em telas pequenas */
+    #sidebar {
+        width: 60px; /* Sidebar um pouco menor em dispositivos móveis */
+    }
+    main {
+        margin-left: 60px; /* Ajusta a margem do main para a sidebar menor */
+    }
+    #sidebar.open-sidebar {
+        width: 200px; /* A sidebar abre para uma largura um pouco menor em dispositivos móveis */
+    }
+    #sidebar.open-sidebar ~ main {
+        margin-left: 200px; /* Ajusta a margem do main quando a sidebar está aberta em mobile */
+    }
+}
