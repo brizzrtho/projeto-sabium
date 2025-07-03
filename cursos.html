@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursos • Sabium</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="cursos.css">
+  <script src="cursos.js" defer></script>
+</head>
+<body>
+    <!--navbar-->
+    <nav id="sidebar">
+        <div id="sidebar_content">
+          <div id="logo">
+            <img src="logosozinha.png" alt="logo">
+          </div>
+            
+            <ul id="side_items">
+                <li class="side-item">
+                    <a href="forum.html">
+                        <i class="fa-solid fa-message"></i>
+                        <span class="item-description">
+                            Fórum
+                        </span>
+                    </a>
+                </li>
+    
+                <li class="side-item">
+                    <a href="comunidades.html">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span class="item-description">
+                            Comunidades
+                        </span>
+                    </a>
+                </li>
+    
+                <li class="side-item active">
+                    <a href="cursos.html">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        <span class="item-description">
+                            Cursos
+                        </span>
+                    </a>
+                </li>
+    
+                <li class="side-item">
+                    <a href="notificacoes.html">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="item-description">
+                            Notificações
+                        </span>
+                    </a>
+                </li>
+    
+                <li class="side-item">
+                    <a href="perfil.html">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span class="item-description">
+                            Perfil
+                        </span>
+                    </a>
+                </li>
+                <li class="side-item">
+                    <a href="configuracoes.html">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="item-description">
+                          Configurações
+                        </span>
+                    </a>
+                </li>
+        </div>
+                </div>
+            </ul>
+    
+            <button id="open_btn">
+                <i id="open_btn_icon" class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+       
+        <div id="logout">
+            <button id="logout_btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="item-description">
+                    Logout
+                </span>
+            </button>
+        </div>
+         <div id="user">
+                <img src="OIP.webp" id="user_avatar" alt="Avatar">
+    
+                <p id="user_infos">
+                    <span class="item-description">
+                        Arrascaeta
+                    </span>
+                    <span class="item-description">
+                        @arrasca_confeiteiro
+                    </span>
+                </p>
+            </div>
+    </nav>
+  <main>
+    <section class="search-filter">
+      <input type="text" class="search-input" id="searchInput" placeholder="buscar cursos...">
+      <select class="filter-select" id="filterSelect">
+        <option value="">Todas as categorias</option>
+        <option value="frontend">Front-end</option>
+        <option value="backend">Back-end</option>
+        <option value="design">Design</option>
+        <option value="dados">Ciência de Dados</option>
+      </select>
+    </section>
+
+    <!-- Meus Cursos -->
+    <section class="courses-section" aria-label="Meus Cursos">
+      <h1 class="titulo">Meus Cursos</h1>
+      <div class="courses-grid">
+        <div class="course-card" data-title="" data-tags="frontend html web">
+          <img src="images (2).png" alt="Curso comprado" class="course-thumb">
+          <div class="course-info">
+            <div class="course-title">HTML Intermediário</div>
+            <div class="course-instructor">com Pedro Alemar</div>
+            <div class="course-tags">
+              <span>HTML</span><span>Web</span>
+            </div>
+            <button class="course-btn" data-tipo="meu">Continuar</button>
+          </div>
+        </div>
+
+        <div class="course-card" data-title="" data-tags="frontend html web">
+          <img src="chorandocss.webp" alt="Curso comprado" class="course-thumb">
+          <div class="course-info">
+            <div class="course-title">Chorando CSS</div>
+            <div class="course-instructor">com Samulso</div>
+            <div class="course-tags">
+              <span>CSS</span><span>Web</span><span>Front-end</span>
+            </div>
+            <button class="course-btn" data-tipo="meu">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Descobrir Novos Cursos -->
+    <section class="courses-section" aria-label="Descobrir novos cursos">
+      <h1 class="titulo">Descubra Novos Cursos</h1>
+      <div class="courses-grid">
+        <div class="course-card" data-title="" data-tags="frontend html css responsivo">
+          <img src="frontend.png" alt="Curso Front-end" class="course-thumb">
+          <div class="course-info">
+            <div class="course-title">Introdução ao Front-end</div>
+            <div class="course-instructor">com Brizz
+            </div>
+            <div class="course-tags">
+              <span>HTML</span><span>CSS</span><span>Responsivo</span>
+            </div>
+            <button class="course-btn" data-tipo="descobrir">Ver mais</button>
+          </div>
+        </div>
+
+        <div class="course-card" data-title="JavaScript do Zero" data-tags="frontend javascript web">
+          <img src="jsdozero.webp" alt="" class="course-thumb">
+          <div class="course-info">
+            <div class="course-title">JavaScript do Zero</div>
+            <div class="course-instructor">com Pedro Alemar</div>
+            <div class="course-tags">
+              <span>JavaScript</span><span>Lógica</span><span>Web</span>
+            </div>
+            <button class="course-btn" data-tipo="descobrir">Ver mais</button>
+          </div>
+        </div>
+
+        <div class="course-card" data-title="Fundamentos de UX Design" data-tags="design ux figma">
+          <img src="UX-user-experience-o-que-e-principio-sbasicos-cargos-scaled.jpg" alt="Curso UX Design" class="course-thumb">
+          <div class="course-info">
+            <div class="course-title">Fundamentos de UX Design</div>
+            <div class="course-instructor">com Maia</div>
+            <div class="course-tags">
+              <span>UX</span><span>Design</span><span>Figma</span>
+            </div>
+            <button class="course-btn" data-tipo="descobrir">Ver mais</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <img class="modal-thumb" src="" alt="Imagem do curso">
+        <h2 class="modal-title"></h2>
+        <p class="modal-instructor"></p>
+        <div class="modal-tags"></div>
+        <p id="modalDesc"></p> 
+        <button class="modal-action-btn"></button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
